@@ -9,7 +9,7 @@
 @if (Model.Product.PhotosPath.Count > 0)
 {
     <div>
-        <img src="~/images/@Model.Product.PhotosPath[0]" width="800px" />
+        <img src="~/images/@Model.Product.Id/@Model.Product.PhotosPath[0]" width="800px" />
     </div>
 }
 <div style="float:left; width:400px; height:100px">

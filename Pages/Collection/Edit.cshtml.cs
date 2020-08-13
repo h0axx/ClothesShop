@@ -83,7 +83,7 @@ namespace OnlineShop.Pages.Collection
                     foreach (string path in ProductPhotosPaths)
                     {
                         string filePath = Path.Combine(webHostEnvironment.WebRootPath,
-                        "images", path);
+                        "images", $"{Product.Id}", path);
                         System.IO.File.Delete(filePath);
                     }
                 }
@@ -114,9 +114,13 @@ namespace OnlineShop.Pages.Collection
 
             if (Photos != null)
             {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", $"{Product.Id}");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
                 foreach (var photo in Photos)
                 {
-                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
                     uniqueFilesNames.Add(uniqueFileName);
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
