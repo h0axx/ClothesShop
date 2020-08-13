@@ -1,0 +1,24 @@
+﻿@page "{productId:int}"
+
+@model OnlineShop.Pages.Collection.DetailModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>@Model.Product.Name</h1>
+@if (Model.Product.PhotosPath.Count > 0)
+{
+    <div>
+        <img src="~/images/@Model.Product.PhotosPath[0]" width="800px" />
+    </div>
+}
+<div style="float:left; width:400px; height:100px">
+    Price: @Model.Product.Price
+</div>
+<div style="float:left; width:400px; height:100px">
+    Size: @Model.Product.Size
+</div>
+<div style="float:left; width:400px; height:100px">
+    <span style="white-space: pre-wrap">@Model.Product.Description</span>
+</div>
+<div style="clear:both"></div>
