@@ -76,7 +76,13 @@ namespace OnlineShop.Pages.Collection
             {
                 // If a new photo is uploaded, the existing photo must be
                 // deleted. So check if there is an existing photo and delete
-                ProductPhotosPaths = productData.GetById(Product.Id).PhotosPath;
+                try
+                {
+                    ProductPhotosPaths = productData.GetById(Product.Id).PhotosPath;
+                }
+                catch(NullReferenceException)
+                {
+                }
 
                 if (ProductPhotosPaths != null)
                 {
@@ -114,7 +120,16 @@ namespace OnlineShop.Pages.Collection
 
             if (Photos != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", $"{Product.Id}");
+                int id;
+                if (Product.Id == 0)
+                {
+                    id = productData.GetNewId();
+                }
+                else
+                {
+                    id = Product.Id;
+                }
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", $"{id}");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);

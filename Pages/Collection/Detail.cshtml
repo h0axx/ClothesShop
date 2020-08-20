@@ -11,6 +11,15 @@
     <div>
         <img src="~/images/@Model.Product.Id/@Model.Product.PhotosPath[0]" width="800px" />
     </div>
+    @if (Model.Product.PhotosPath.Count > 1)
+    {
+        foreach (var photopath in Model.Product.PhotosPath.GetRange(1, Model.Product.PhotosPath.Count - 1))
+        {
+            <div>
+                <img src="~/images/@Model.Product.Id/@photopath" width="200px" />
+            </div>
+        }
+    }
 }
 <div style="float:left; width:400px; height:100px">
     Price: @Model.Product.Price
