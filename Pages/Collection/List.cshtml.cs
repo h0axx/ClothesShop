@@ -24,7 +24,7 @@ namespace OnlineShop.Pages.Collection
         }
         public void OnGet()
         {
-            Products = productData.GetRestaurantsByName(SearchTerm);
+            Products = productData.GetProductsByName(SearchTerm);
         }
     }
 }

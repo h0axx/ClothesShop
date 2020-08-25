@@ -13,6 +13,7 @@ namespace OnlineShop.Pages.Collection
     {
         private readonly IProductData productData;
         public Product Product { get; set; }
+        public IEnumerable<Photo> Photos { get; set; }
         [TempData]
         public string Message { get; set; }
         
@@ -23,6 +24,7 @@ namespace OnlineShop.Pages.Collection
         public IActionResult OnGet(int productId)
         {
             Product = productData.GetById(productId);
+            Photos = productData.GetPhotosById(productId);
            
             if (Product == null)
             {

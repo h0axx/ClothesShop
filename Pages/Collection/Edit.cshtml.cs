@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +8,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineShop.Core;
 using OnlineShop.Data;
+using OnlineShop.ServiceLayer;
 
 namespace OnlineShop.Pages.Collection
 {
     public class EditModel : PageModel
     {
+        private readonly ProductService productService;
+
         private readonly IProductData productData;
         private readonly IHtmlHelper htmlHelper;
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -28,14 +28,17 @@ namespace OnlineShop.Pages.Collection
             this.htmlHelper = htmlHelper;
             this.webHostEnvironment = webHostEnvironment;
         }
-
+        //public EditModel(ProductService productService)
+        //{
+        //    this.productService = productService;
+        //}
         public IEnumerable<SelectListItem> Sizes { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Fabrics { get; set; }
         public IEnumerable<SelectListItem> Genders { get; set; }
         [BindProperty]
         public Product Product { get; set; }
-        public List<string> ProductPhotosPaths { get; set; }
+        public IEnumerable<Photo> ProductPhotos { get; set; }
         [BindProperty]
         public List<IFormFile> Photos { get; set; }
 
@@ -54,7 +57,7 @@ namespace OnlineShop.Pages.Collection
             {
                 Product = new Product();
             }
-
+            
             if (Product == null)
             {
                 return RedirectToPage("./NotFound");
@@ -78,45 +81,52 @@ namespace OnlineShop.Pages.Collection
                 // deleted. So check if there is an existing photo and delete
                 try
                 {
-                    ProductPhotosPaths = productData.GetById(Product.Id).PhotosPath;
+                    ProductPhotos = productData.GetPhotosById(Product.Id);
                 }
                 catch(NullReferenceException)
                 {
                 }
 
-                if (ProductPhotosPaths != null)
+                if (ProductPhotos != null)
                 {
-                    foreach (string path in ProductPhotosPaths)
+                    foreach (Photo photo in ProductPhotos)
                     {
                         string filePath = Path.Combine(webHostEnvironment.WebRootPath,
-                        "images", $"{Product.Id}", path);
+                        "images", $"{Product.Id}", photo.Path);
                         System.IO.File.Delete(filePath);
                     }
                 }
-                Product.PhotosPath = ProcessUploadedFile();
             }
             if (Product.Id > 0)
-            {
+            { 
                 if (Photos.Count > 0)
                 {
+                    Product.Photos = ProcessUploadedFile();
+                    productData.DeletePhotos(Product.Id);
                     Product = productData.Update(Product);
                 }
                 else
                 {
-                    Product = productData.UpdateWithoutPhotos(Product);
+                    Product = productData.Update(Product);
                 }
             }
             else
             {
                 Product = productData.Add(Product);
+                Product.Photos = ProcessUploadedFile();
+                productData.Commit();
+                if (Product.Photos != null)
+                {
+                    Product = productData.Update(Product);
+                }
             }
             productData.Commit();
             TempData["Message"] = "Product saved!";
             return RedirectToPage("./Detail", new { productId = Product.Id });
         }
-        private List<string> ProcessUploadedFile()
+        private List<Photo> ProcessUploadedFile()
         {
-            List<string> uniqueFilesNames = new List<string>();
+            List<Photo> uniqueFilesNames = new List<Photo>();
 
             if (Photos != null)
             {
@@ -137,7 +147,8 @@ namespace OnlineShop.Pages.Collection
                 foreach (var photo in Photos)
                 {
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
-                    uniqueFilesNames.Add(uniqueFileName);
+                    var newPhoto = new Photo(Product.Id, uniqueFileName);
+                    uniqueFilesNames.Add(newPhoto);
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     using var fileStream = new FileStream(filePath, FileMode.Create);
                     photo.CopyTo(fileStream);
