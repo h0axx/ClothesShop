@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Data;
+using OnlineShop.Service;
 
 namespace OnlineShop
 {
@@ -23,6 +24,7 @@ namespace OnlineShop
             services.AddDbContextPool<OnlineShopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShopDb")));
             services.AddRazorPages();
             services.AddScoped<IProductData, SqlProductData>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

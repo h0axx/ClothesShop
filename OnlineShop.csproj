@@ -6,7 +6,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\OnlineShop.Core\OnlineShop.Core.csproj" />
 		<ProjectReference Include="..\OnlineShop.Data\OnlineShop.Data.csproj" />
-		<ProjectReference Include="..\OnlineShop.Services\OnlineShop.ServiceLayer.csproj" />
+		<ProjectReference Include="..\OnlineShop.Services\OnlineShop.Service.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
