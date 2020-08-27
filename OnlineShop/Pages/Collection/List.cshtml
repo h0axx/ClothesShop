@@ -4,28 +4,40 @@
     ViewData["Title"] = "Collection";
 }
 
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
 <h1>List</h1>
 <table class="table">
+
     @foreach (var product in Model.Products)
     {
-    <tr>
-        @if (product.Photos.Count() > 0)
-        {
-            <td width="400">
-                <a asp-page="./Detail" asp-route-productId="@product.Id">
-                    <img src="~/images/@product.Id/@product.Photos[0].Path" width="30%" height="30%" />
+        <tr>
+            @if (product.Photos.Count() > 0)
+            {
+                <td width="400">
+                    <a asp-page="./Detail" asp-route-productId="@product.Id">
+                        <img src="~/images/@product.Id/@product.Photos[0].Path" width="30%" height="30%" />
+                    </a>
+                </td>
+            }
+            else
+            {
+                <td width="400">
+                    <a asp-page="./Detail" asp-route-productId="@product.Id"></a>
+                </td>
+            }
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@product.Size</td>
+            <td>
+                <a class="btn btn-lg"
+                   asp-page="./Delete"
+                   asp-route-productId="@product.Id">
+                    <i class="glyphicon glyphicon-trash"></i>
                 </a>
             </td>
-        }
-        else
-        {
-            <td width="400">
-                <a asp-page="./Detail" asp-route-productId="@product.Id"></a>
-            </td>
-        }
-        <td>@product.Name</td>
-        <td>@product.Price</td>
-        <td>@product.Size</td>
-    </tr>
+        </tr>
     }
 </table>

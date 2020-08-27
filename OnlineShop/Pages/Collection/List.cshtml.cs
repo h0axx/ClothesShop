@@ -17,6 +17,8 @@ namespace OnlineShop.Pages.Collection
         public IEnumerable<Product> Products { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+        [TempData]
+        public string Message { get; set; }
         public ListModel(IConfiguration config, IProductData productData)
         {
             this.config = config;

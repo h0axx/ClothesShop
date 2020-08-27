@@ -96,8 +96,9 @@ namespace OnlineShop.Service
             else
             {
                 Product = productData.Add(Product);
-                Product.Photos = ProcessUploadedFile();
                 productData.Commit();
+                Product.Id = productData.GetNewId() - 1;
+                Product.Photos = ProcessUploadedFile();
                 if (Product.Photos != null)
                 {
                     Product = productData.Update(Product);
