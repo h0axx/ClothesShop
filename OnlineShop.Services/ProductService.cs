@@ -137,7 +137,6 @@ namespace OnlineShop.Service
                     photo.CopyTo(fileStream);
                 }
             }
-
             return uniqueFilesNames;
         }
     }
