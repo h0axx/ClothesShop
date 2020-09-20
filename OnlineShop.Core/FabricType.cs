@@ -3,17 +3,15 @@
     public enum FabricType
     {
         None,
-        Bawełna,
-        Len,
-        Jedwab,
-        Wełna,
-        Wiskoza,
-        Poliester,
-        Elastan,
-        Kaszmir,
-        Akryl,
-        Alpaka,
-        Angora,
-        Moher
+        Cotton,
+        Flax,
+        Silk,
+        Wool,
+        Viscoze,
+        Polyester,
+        Spandex,
+        Cashmere,
+        Acrylic,
+        Mohair
     }
 }

@@ -1,15 +1,14 @@
 ﻿@page "{productId:int?}"
 @model OnlineShop.Pages.Collection.EditModel
-@{
-    ViewData["Title"] = "Edit";
-}
 
 @if (Model.Product.Name == null)
 {
+    ViewData["Title"] = "Add";
     <h1>Add new product</h1>
 }
 else
 {
+    ViewData["Title"] = "Edit";
     <h1>Edit @Model.Product.Name</h1>
 }
 <form method="post" enctype="multipart/form-data">

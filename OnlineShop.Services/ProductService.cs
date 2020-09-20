@@ -43,6 +43,25 @@ namespace OnlineShop.Service
             Fabrics = htmlHelper.GetEnumSelectList<FabricType>();
             Genders = htmlHelper.GetEnumSelectList<GenderType>();
 
+            SetProduct(productId);
+
+            return Product;
+        }
+
+        public Product OnPostEditPage(Product product, List<IFormFile> photos)
+        {
+            Product = product;
+            Photos = photos;
+            //If there are both new and old photos.
+            DeletePhotos();
+            //Add new product or update the changes of already existing one.
+            ProcessProductChanges();
+
+            return Product;
+        }
+
+        private void SetProduct(int? productId)
+        {
             if (productId.HasValue)
             {
                 Product = productData.GetById(productId.Value);
@@ -51,35 +70,9 @@ namespace OnlineShop.Service
             {
                 Product = new Product();
             }
-
-            return Product;
         }
-        public Product OnPostEditPage(Product product, List<IFormFile> photos)
+        private void ProcessProductChanges()
         {
-            Product = product;
-            Photos = photos;
-            if (Photos != null && Photos.Count > 0)
-            {
-                // If a new photo is uploaded, the existing photo must be
-                // deleted. So check if there is an existing photo and delete
-                try
-                {
-                    ProductPhotos = productData.GetPhotosById(Product.Id);
-                }
-                catch (NullReferenceException)
-                {
-                }
-
-                if (ProductPhotos != null)
-                {
-                    foreach (Photo photo in ProductPhotos)
-                    {
-                        string filePath = Path.Combine(webHostEnvironment.WebRootPath,
-                        "images", $"{Product.Id}", photo.Path);
-                        File.Delete(filePath);
-                    }
-                }
-            }
             if (Product.Id > 0)
             {
                 if (Photos.Count > 0)
@@ -105,7 +98,35 @@ namespace OnlineShop.Service
                 }
             }
             productData.Commit();
-            return Product;
+        }
+        private void DeletePhotos()
+        {
+            if (Photos != null && Photos.Count > 0)
+            {
+                // If a new photo is uploaded, the existing photo must be
+                // deleted. So check if there is an existing photo and delete
+                try
+                {
+                    ProductPhotos = productData.GetPhotosById(Product.Id);
+                }
+                catch (NullReferenceException)
+                {
+                }
+
+                DeletePhotosFiles();
+            }
+        }
+        private void DeletePhotosFiles()
+        {
+            if (ProductPhotos != null)
+            {
+                foreach (Photo photo in ProductPhotos)
+                {
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath,
+                    "images", $"{Product.Id}", photo.Path);
+                    File.Delete(filePath);
+                }
+            }
         }
         private List<Photo> ProcessUploadedFile()
         {

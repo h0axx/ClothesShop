@@ -3,13 +3,13 @@
     public enum ClothingType
     {
         None,
-        Sukienka,
-        Spodnie,
-        Kurtka,
-        Bluza,
-        Sweter,
-        Bluzka,
-        Koszula,
-        Akcesoria
+        Dress,
+        Pants,
+        Jacket,
+        Sweatshirt,
+        Sweater,
+        Blouse,
+        Shirt,
+        Accessory
     }
 }
