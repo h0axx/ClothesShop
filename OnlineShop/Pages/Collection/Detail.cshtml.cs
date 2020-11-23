@@ -25,7 +25,7 @@ namespace OnlineShop.Pages.Collection
         {
             Product = productData.GetById(productId);
             Photos = productData.GetPhotosById(productId);
-           
+
             if (Product == null)
             {
                 return RedirectToPage("./NotFound");
