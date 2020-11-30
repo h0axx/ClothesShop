@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Hosting;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,6 +10,7 @@ using OnlineShop.Service;
 
 namespace OnlineShop.Pages.Collection
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly IProductService productService;
@@ -30,7 +28,6 @@ namespace OnlineShop.Pages.Collection
         {
             this.productService = productService;
         }
-
         public IActionResult OnGet(int? productId)
         {
             Product = productService.OnGetEditPage(productId);

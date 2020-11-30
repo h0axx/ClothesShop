@@ -1,0 +1,33 @@
+﻿@page
+@model OnlineShop.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="userInput.Email"></label>
+                <input asp-for="userInput.Email" class="form-control" />
+                <span asp-validation-for="userInput.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="userInput.Password"></label>
+                <input asp-for="userInput.Password" class="form-control" />
+                <span asp-validation-for="userInput.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="font-size:14px; font-weight:lighter" asp-for="userInput.RememberMe">
+                    <input type="checkbox" asp-for="userInput.RememberMe" />
+                    @Html.DisplayNameFor(m => m.userInput.RememberMe)
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+

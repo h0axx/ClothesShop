@@ -1,0 +1,44 @@
+﻿@page
+@model OnlineShop.Pages.Account.UserModel
+@{
+    ViewData["Title"] = "User";
+}
+
+<h1>@Model.UserData.FirstName</h1>
+
+@Model.LoggedUser.Email
+<br />
+@Model.LoggedUser.Id
+<br />
+@Model.UserData.IdentityId
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="UserData.Id" />
+            <input type="hidden" asp-for="UserData.IdentityId" />
+            <div class="form-group">
+                <label asp-for="UserData.FirstName"></label>
+                <input asp-for="UserData.FirstName" class="form-control" />
+                <span asp-validation-for="UserData.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserData.City"></label>
+                <input asp-for="UserData.City" class="form-control" />
+                <span asp-validation-for="UserData.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserData.Address"></label>
+                <input asp-for="UserData.Address" class="form-control" />
+                <span asp-validation-for="UserData.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserData.PostCode"></label>
+                <input asp-for="UserData.PostCode" class="form-control" />
+                <span asp-validation-for="UserData.PostCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+    </div>
+</div>

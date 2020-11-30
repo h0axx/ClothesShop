@@ -11,9 +11,9 @@ namespace OnlineShop.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<User> signInManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
-        public LogoutModel(SignInManager<User> signInManager)
+        public LogoutModel(SignInManager<IdentityUser> signInManager)
         {
             this.signInManager = signInManager;
         }
