@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Core;
 
@@ -12,6 +13,7 @@ namespace OnlineShop.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Photo> Photos { get; set; }
-        public DbSet<User> Members { get; set; }
+        public DbSet<IdentityUser> IdentityUsers { get; set; }
+        public DbSet<Member> Members { get; set; }
     }
 }

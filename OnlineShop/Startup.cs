@@ -25,10 +25,15 @@ namespace OnlineShop
         {
             services.AddDbContextPool<OnlineShopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShopDb")));
             services.AddRazorPages();
-            services.AddScoped<IProductData, SqlProductData>();
-            services.AddScoped<IProductService, ProductService>();
+            //services.AddRazorPages( options =>
+            //{
+            //    options.Conventions.AuthorizePage("/Collection/Edit");
+            //});
+            services.AddTransient<IProductData, SqlProductData>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IMemberData, MemberData>();
 
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = false;
@@ -56,9 +61,8 @@ namespace OnlineShop
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
