@@ -9,10 +9,23 @@
     <div class="alert alert-info">@Model.Message</div>
 }
 <div class="row">
-    @foreach (var product in Model.Products)
+
+    @if (Model.Admin == true)
     {
-    <div class="col-xl-4 col-lg-4 col-md-6 col-sm 6">
-        <partial name="_Summary" model="product" />
-    </div>
+        foreach (var product in Model.Products)
+        {
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm 6">
+                <partial name="_AdminSummary" model="product" />
+            </div>
+        }
+    }
+    else
+    {
+        foreach (var product in Model.Products)
+        {
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm 6">
+                <partial name="_Summary" model="product" />
+            </div>
+        }
     }
 </div>
