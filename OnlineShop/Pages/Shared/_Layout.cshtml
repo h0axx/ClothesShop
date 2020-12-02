@@ -50,18 +50,26 @@
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @if (signInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout">Logout @User.Identity.Name</a>
+                        {      
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage account
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <span class="dropdown-header">@User.Identity.Name</span>
+                                    <a class="dropdown-item" asp-page="/Account/User">Settings</a>
+                                    <a class="dropdown-item" asp-page="/Account/Logout">Logout</a>
+                                </div>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
                             </li>
                         }
                     </ul>
