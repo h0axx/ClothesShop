@@ -27,7 +27,9 @@ namespace OnlineShop.Data
 
         public Member Delete(string identityId)
         {
-            throw new NotImplementedException();
+            var member = GetMemberById(identityId);
+            db.Members.Remove(member);
+            return member;
         }
 
         public Member GetMemberById(string identityId)
