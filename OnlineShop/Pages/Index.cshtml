@@ -4,7 +4,12 @@
     ViewData["Title"] = "Home page";
 }
 
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
 <div class="text-center">
+
     <h1 class="display-4">Welcome</h1>
     <p>App build with ASP.NET Core</a>.</p>
 </div>
