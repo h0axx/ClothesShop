@@ -13,7 +13,7 @@
 @Model.UserData.IdentityId
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="UserData.Id" />
@@ -39,6 +39,16 @@
                 <span asp-validation-for="UserData.PostCode" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" value="Delete account" asp-page-handler="Delete" class="form-control" />
+            </div>
         </form>
     </div>
 </div>

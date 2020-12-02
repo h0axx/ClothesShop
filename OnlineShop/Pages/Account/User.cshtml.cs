@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,9 +10,11 @@ using OnlineShop.Data;
 
 namespace OnlineShop.Pages.Account
 {
+    [Authorize]
     public class UserModel : PageModel
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
         private readonly IMemberData memberData;
 
         public IdentityUser LoggedUser { get; set; }
@@ -19,10 +22,11 @@ namespace OnlineShop.Pages.Account
         public Member UserData { get; set; }
         public string LoggedUserRole { get; set; }
 
-        public UserModel(UserManager<IdentityUser> userManager,
-                                IMemberData memberData)
+        public UserModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager
+                                ,IMemberData memberData)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.memberData = memberData;
         }
 
@@ -52,6 +56,29 @@ namespace OnlineShop.Pages.Account
 
             return Page();
 
+        }
+
+        public async Task<IActionResult> OnPostDelete()
+        {
+            LoggedUser = await userManager.GetUserAsync(User);
+
+            if (await userManager.IsInRoleAsync(LoggedUser, "Admin"))
+            {
+                TempData["Message"] = "Can not delete admin user!";
+                return RedirectToPage("../Index");
+            }
+            
+            if (LoggedUser == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            await signInManager.SignOutAsync();
+            memberData.Delete(LoggedUser.Id);
+            await userManager.DeleteAsync(LoggedUser);
+
+            TempData["Message"] = "Account deleted successfuly!";
+            return RedirectToPage("../Index");
         }
 
         private async Task<IActionResult> RenderPage()
