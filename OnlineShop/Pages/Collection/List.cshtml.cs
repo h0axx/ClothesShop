@@ -36,7 +36,7 @@ namespace OnlineShop.Pages.Collection
         {
             Products = productData.GetProductsByName(SearchTerm);
 
-            if (IsUserAdmin().Result)
+            if (IsUserAdmin())
             {
                 Admin = true;
             }
@@ -46,20 +46,10 @@ namespace OnlineShop.Pages.Collection
             }
         }
 
-        private async Task<bool> IsUserAdmin()
+        private bool IsUserAdmin()
         {
-            var loggedUser = await userManager.GetUserAsync(User);
 
-            if (loggedUser == null)
-            {
-                return false;
-            }
-
-            var userRoles = await userManager.GetRolesAsync(loggedUser);
-
-            var userRole = userRoles[0];
-
-            if(userRole == "Admin")
+            if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 return true;
             }
