@@ -4,7 +4,7 @@
     ViewData["Title"] = "User";
 }
 
-<h1>@Model.UserData.FirstName</h1>
+<h1>@Model.UserData.FullName</h1>
 
 @Model.LoggedUser.Email
 <br />
@@ -22,6 +22,11 @@
                 <label asp-for="UserData.FirstName"></label>
                 <input asp-for="UserData.FirstName" class="form-control" />
                 <span asp-validation-for="UserData.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserData.LastName"></label>
+                <input asp-for="UserData.LastName" class="form-control" />
+                <span asp-validation-for="UserData.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserData.City"></label>

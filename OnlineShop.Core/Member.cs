@@ -9,9 +9,11 @@ namespace OnlineShop.Core
     {
         [Required]
         public int Id { get; set; }
-        [Display(Name = "Name")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
         public string City { get; set; }
         public string Address { get; set; }
         [Display(Name = "Post Code")]
