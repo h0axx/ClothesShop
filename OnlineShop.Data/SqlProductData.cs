@@ -33,8 +33,26 @@ namespace OnlineShop.Data
             if (product != null)
             {
                 db.Products.Remove(product);
+                DeleteBasketItems(id);
             }
             return product;
+        }
+
+        public IEnumerable<BasketItem> DeleteBasketItems(int productId)
+        {
+            var allBasketItems = from i in db.BasketItems
+                                 where i.ProductId == productId
+                                 select i;
+            
+            if (allBasketItems != null)
+            {
+                foreach (var item in allBasketItems)
+                {
+                    db.BasketItems.Remove(item);
+                }
+            }
+
+            return allBasketItems;
         }
 
         public IEnumerable<Photo> DeletePhotos(int id)

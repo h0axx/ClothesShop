@@ -13,6 +13,7 @@ namespace OnlineShop.Data
         Product Add(Product product);
         Product Delete(int id);
         IEnumerable<Photo> DeletePhotos(int id);
+        IEnumerable<BasketItem> DeleteBasketItems(int productId);
         int Commit();
     }
 }
