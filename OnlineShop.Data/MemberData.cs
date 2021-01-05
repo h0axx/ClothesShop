@@ -63,6 +63,14 @@ namespace OnlineShop.Data
             return allBasketItems;
         }
 
+        public IEnumerable<BasketItem> GetAllBasketItemsWithProductId(int productId)
+        {
+            var allBasketItems = from i in db.BasketItems
+                                 where i.ProductId == productId
+                                 select i;
+            return allBasketItems;
+        }
+
         public BasketItem GetBasketItem(int itemId)
         {
             var query = db.BasketItems.Where(z => z.Id == itemId).FirstOrDefault();

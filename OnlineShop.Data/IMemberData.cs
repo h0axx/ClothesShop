@@ -14,6 +14,7 @@ namespace OnlineShop.Data
         Member Delete(string identityId);
         BasketItem GetBasketItem(int itemId);
         IEnumerable<BasketItem> GetAllBasketItems(int memberId);
+        IEnumerable<BasketItem> GetAllBasketItemsWithProductId(int productId);
         BasketItem AddToBasket(int memberId, int productId);
         BasketItem DeleteFromBasket(int itemId);
         int Commit();
