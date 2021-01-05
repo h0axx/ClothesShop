@@ -61,12 +61,12 @@ namespace OnlineShop.Pages.Collection
                 var result = memberData.AddToBasket(memberId, productId);
                 if (result == null)
                 {
-                    Message = "Product already in basket!";
-                    return Page();
+                    TempData["Message"] = "Product already in basket!";
+                    return RedirectToPage("./Detail");
                 }
-                Message = "Product added to basket!";
+                TempData["Message"] = "Product added to basket!";
                 memberData.Commit();
-                return Page();
+                return RedirectToPage("./Detail");
             }
         }
     }
