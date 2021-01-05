@@ -68,6 +68,11 @@ else
         </select>
         <span class="text-danger" asp-validation-for="Product.Type"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Product.Available"></label>
+        <input type="checkbox" asp-for="Product.Available" class="form-control" />
+        <span class="text-danger" asp-validation-for="Product.Available"></span>
+    </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
 
