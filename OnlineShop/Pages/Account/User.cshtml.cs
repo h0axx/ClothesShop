@@ -64,7 +64,7 @@ namespace OnlineShop.Pages.Account
 
             if (await userManager.IsInRoleAsync(LoggedUser, "Admin"))
             {
-                TempData["Message"] = "Can not delete admin user!";
+                TempData["Message"] = "You can not delete admin user!";
                 return RedirectToPage("../Index");
             }
             
@@ -77,7 +77,7 @@ namespace OnlineShop.Pages.Account
             memberData.Delete(LoggedUser.Id);
             await userManager.DeleteAsync(LoggedUser);
 
-            TempData["Message"] = "Account deleted successfuly!";
+            TempData["Message"] = "Account deleted successfully!";
             return RedirectToPage("../Index");
         }
 
