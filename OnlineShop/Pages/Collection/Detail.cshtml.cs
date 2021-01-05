@@ -51,7 +51,7 @@ namespace OnlineShop.Pages.Collection
             {
                 return RedirectToPage("./NotFound");
             }
-            else if ( loggedUser == null)
+            else if (loggedUser == null)
             {
                 return RedirectToPage("../Account/Login");
             }
