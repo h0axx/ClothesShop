@@ -5,4 +5,50 @@
 }
 
 <h1>Basket</h1>
+@if (Model.Message != null)
+{
+<div class="alert alert-info">@Model.Message</div>
+}
+@if (Model.BasketItems != null)
+{
 
+    for (int i = 0; i < Model.BasketItems.Count(); i++)
+    {
+        var item = Model.BasketItems[i];
+
+        <div style="clear:both">
+            <div class="float-left">
+                <h3>@item.Name</h3>
+            </div>
+            <div class="float-left" style="width:10%">
+                @if (item.Photos.Count() > 0)
+                {
+                    <a asp-page="./Detail" asp-route-productId="@item.Id">
+                        <img src="~/images/@item.Id/@item.Photos[0].Path" width="100%" />
+                    </a>
+                }
+            </div>
+            <div class="float-left">
+                <span>@item.Price $</span>
+            </div>
+            <div class="float-left">
+                <span>@item.Size</span>
+            </div>
+            <div class="float-left">
+                <a class="btn btn-lg"
+                   asp-page="../Collection/Detail"
+                   asp-route-productId="@item.Id">
+                    <i class="glyphicon glyphicon-zoom-in"></i>
+                </a>
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-danger" value="Delete"
+                           asp-page-handler="Delete"
+                           asp-route-itemId=@Model.ItemsId[i] />
+                </div>
+            </form>
+        </div>
+
+    }
+}
