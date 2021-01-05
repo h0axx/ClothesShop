@@ -8,8 +8,18 @@
 {
     <div class="alert alert-info">@Model.Message</div>
 }
+<div style="clear:both; padding:inherit" p>
+    <form method="get">
+        <div class="input-group">
+            <input class="form-control" asp-for="SearchTerm" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="row">
-
+    
     @if (Model.Admin == true)
     {
         foreach (var product in Model.Products)
