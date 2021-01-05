@@ -88,6 +88,47 @@ namespace OnlineShop.Data
             return query;
         }
 
+        public IEnumerable<Product> GetProductsBy(string name, ClothingSize? size, GenderType? gender,
+                                                    FabricType? fabric, ClothingType? type)
+        {
+            var query = db.Products.Include("Photos");
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(z => z.Name.StartsWith(name));
+            }
+            if(size != null)
+            {
+                if (size != ClothingSize.None)
+                {
+                    query = query.Where(z => z.Size == size);
+                }
+            }
+            if (gender != null)
+            {
+                if (gender != GenderType.None)
+                {
+                    query = query.Where(z => z.Gender == gender);
+                }
+            }
+            if (fabric != null)
+            {
+                if (fabric != FabricType.None)
+                {
+                    query = query.Where(z => z.Fabric == fabric);
+                }
+            }
+            if (type != null)
+            {
+                if (type != ClothingType.None)
+                {
+                    query = query.Where(z => z.Type == type);
+                }
+            }
+
+            return query;
+        }
+
         public IEnumerable<Product> GetProductsByName(string name)
         {
             var query = db.Products.Include("Photos");
