@@ -18,6 +18,12 @@ namespace OnlineShop.Core
         public string Address { get; set; }
         [Display(Name = "Post Code")]
         public string PostCode { get; set; }
-        public string IdentityId { get; set; }
+        public string IdentityId { get; set; }      
+        public List<BasketItem> Basket { get; set; }
+
+        public Member()
+        {
+            Basket = new List<BasketItem>();
+        }
     }
 }
