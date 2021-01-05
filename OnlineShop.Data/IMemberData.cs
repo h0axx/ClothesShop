@@ -12,6 +12,10 @@ namespace OnlineShop.Data
         Member Update(Member updatedMember);
         Member Add(Member member);
         Member Delete(string identityId);
+        BasketItem GetBasketItem(int itemId);
+        IEnumerable<BasketItem> GetAllBasketItems(int memberId);
+        BasketItem AddToBasket(int memberId, int productId);
+        BasketItem DeleteFromBasket(int itemId);
         int Commit();
     }
 }

@@ -1,4 +1,5 @@
-﻿using OnlineShop.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,21 @@ namespace OnlineShop.Data
             return member;
         }
 
+        public BasketItem AddToBasket(int memberId, int productId)
+        {
+            var basketItem = new BasketItem(memberId, productId);
+            var check = db.BasketItems.Where(z => z.MemberId == memberId && z.ProductId == productId).FirstOrDefault();
+            if (check == null)
+            {
+                db.BasketItems.Add(basketItem);
+                return basketItem;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public int Commit()
         {
             return db.SaveChanges();
@@ -30,6 +46,27 @@ namespace OnlineShop.Data
             var member = GetMemberById(identityId);
             db.Members.Remove(member);
             return member;
+        }
+
+        public BasketItem DeleteFromBasket(int itemId)
+        {
+            var basketItem = GetBasketItem(itemId);
+            db.BasketItems.Remove(basketItem);
+            return basketItem;
+        }
+
+        public IEnumerable<BasketItem> GetAllBasketItems(int memberId)
+        {
+            var allBasketItems = from i in db.BasketItems
+                                 where i.MemberId == memberId
+                                 select i;
+            return allBasketItems;
+        }
+
+        public BasketItem GetBasketItem(int itemId)
+        {
+            var query = db.BasketItems.Where(z => z.Id == itemId).FirstOrDefault();
+            return query;
         }
 
         public Member GetMemberById(string identityId)
