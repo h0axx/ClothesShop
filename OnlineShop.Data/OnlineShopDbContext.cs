@@ -15,5 +15,6 @@ namespace OnlineShop.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<IdentityUser> IdentityUsers { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
     }
 }
