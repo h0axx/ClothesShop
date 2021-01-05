@@ -7,30 +7,35 @@
 
 <h1>@Model.Product.Name</h1>
 
+
     @if (Model.Message != null)
     {
         <div class="alert alert-info">@Model.Message</div>
     }
     @if (Model.Photos.Count() > 0)
     {
-    <div class="row">
-        @foreach (var photo in Model.Photos)
-        {
-        <div style="float:left; width:400px;" >
-            <img src="~/images/@Model.Product.Id/@photo.Path" width="100%" />
+        <div class="row">
+            @foreach (var photo in Model.Photos)
+            {
+                <div style="float:left; width:400px;">
+                    <img src="~/images/@Model.Product.Id/@photo.Path" width="100%" />
+                </div>
+            }
         </div>
-        }
-    </div>
     }
-<div>
-    <div style="float:left; width:400px; height:100px">
-        Price: @Model.Product.Price
+    <div>
+        <div style="float:left; width:400px; height:100px">
+            Price: @Model.Product.Price
+        </div>
+        <div style="float:left; width:400px; height:100px">
+            Size: @Model.Product.Size
+        </div>
+        <div style="float:left; ">
+            <span style="white-space: pre-wrap">@Model.Product.Description</span>
+        </div>
+        <div style="clear:both"></div>
     </div>
-    <div style="float:left; width:400px; height:100px">
-        Size: @Model.Product.Size
-    </div>
-    <div style="float:left; ">
-        <span style="white-space: pre-wrap">@Model.Product.Description</span>
-    </div>
-    <div style="clear:both"></div>
-</div>
+
+    <form method="post" enctype="multipart/form-data">
+        <button type="submit">Add to basket</button>
+    </form>
