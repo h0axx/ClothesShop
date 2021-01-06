@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Data;
 
 namespace OnlineShop.Data.Migrations
 {
     [DbContext(typeof(OnlineShopDbContext))]
-    partial class OnlineShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210105084243_basketmigrationrepair")]
+    partial class basketmigrationrepair
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,24 +217,19 @@ namespace OnlineShop.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OnlineShop.Core.BasketItem", b =>
+            modelBuilder.Entity("OnlineShop.Core.Basket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("BasketItems");
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("OnlineShop.Core.Member", b =>
@@ -296,6 +293,9 @@ namespace OnlineShop.Data.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("BasketId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -320,6 +320,8 @@ namespace OnlineShop.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
 
                     b.ToTable("Products");
                 });
@@ -375,15 +377,6 @@ namespace OnlineShop.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineShop.Core.BasketItem", b =>
-                {
-                    b.HasOne("OnlineShop.Core.Member", null)
-                        .WithMany("Basket")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("OnlineShop.Core.Photo", b =>
                 {
                     b.HasOne("OnlineShop.Core.Product", null)
@@ -391,6 +384,13 @@ namespace OnlineShop.Data.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineShop.Core.Product", b =>
+                {
+                    b.HasOne("OnlineShop.Core.Basket", null)
+                        .WithMany("Products")
+                        .HasForeignKey("BasketId");
                 });
 #pragma warning restore 612, 618
         }
