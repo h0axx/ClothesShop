@@ -24,14 +24,19 @@ namespace OnlineShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<OnlineShopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShopDb")));
+
             services.AddRazorPages();
-            //services.AddRazorPages( options =>
-            //{
-            //    options.Conventions.AuthorizePage("/Collection/Edit");
-            //});
+
             services.AddTransient<IProductData, SqlProductData>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IMemberData, MemberData>();
+
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
