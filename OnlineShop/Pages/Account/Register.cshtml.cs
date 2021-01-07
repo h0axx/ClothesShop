@@ -24,6 +24,8 @@ namespace OnlineShop.Pages.Account
 
         [BindProperty]
         public RegisterInput userInput { get; set; }
+        [TempData]
+        public string Message { get; set; }
 
         public RegisterModel(UserManager<IdentityUser> userManager,
                              RoleManager<IdentityRole> roleManager,
@@ -86,8 +88,9 @@ namespace OnlineShop.Pages.Account
                 //Add customer user to newly created user
                 await userManager.AddToRoleAsync(user, "Customer");
 
-                await signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToPage("../Index");
+                Message = "Confirm your email address to login.";
+
+                return RedirectToPage("./Login");
             }
 
             foreach (var error in result.Errors)

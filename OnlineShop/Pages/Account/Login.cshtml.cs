@@ -9,13 +9,19 @@ namespace OnlineShop.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> userManager;
+
         [BindProperty]
         public LoginInput userInput { get; set; }
+        [TempData]
+        public string Message { get; set; }
 
-        public LoginModel(SignInManager<IdentityUser> signInManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager,
+                                        UserManager<IdentityUser> userManager)
         {
             userInput = new LoginInput();
             this.signInManager = signInManager;
+            this.userManager = userManager;
         }
         public IActionResult OnGet()
         {
@@ -33,7 +39,19 @@ namespace OnlineShop.Pages.Account
             {
                 return Page();
             }
+            var user = await userManager.FindByEmailAsync(userInput.Email);
+            
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return Page();
+            }
 
+            if (!await userManager.IsEmailConfirmedAsync(user))
+            {
+                ModelState.AddModelError(string.Empty, "You need to confirm your email. Check your mailbox.");
+                return Page();
+            }
             var result = await signInManager.PasswordSignInAsync(userInput.Email, userInput.Password,userInput.RememberMe, lockoutOnFailure: false);
             // If login is successful, redirect to index page
             if (result.Succeeded)
