@@ -1,0 +1,13 @@
+﻿@page
+@model OnlineShop.Pages.Account.NotFoundModel
+@{
+    ViewData["Title"] = "NotFound";
+}
+
+<h1>NotFound</h1>
+
+@if (Model.Message != null)
+{
+    <h2>@Model.Message</h2>
+}
+

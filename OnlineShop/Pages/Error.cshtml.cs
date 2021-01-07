@@ -13,6 +13,8 @@ namespace OnlineShop.Pages
     public class ErrorModel : PageModel
     {
         public string RequestId { get; set; }
+        [TempData]
+        public string Message { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 

@@ -19,6 +19,11 @@ namespace OnlineShop.Pages.Account
         }
         public IActionResult OnGet()
         {
+            if (signInManager.IsSignedIn(User))
+            {
+                return RedirectToPage("../Index");
+            }
+
             return Page();
         }
 

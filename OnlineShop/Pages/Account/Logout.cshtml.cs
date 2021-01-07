@@ -19,11 +19,19 @@ namespace OnlineShop.Pages.Account
         }
         public IActionResult OnGet()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return RedirectToPage("./Login");
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPost()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return RedirectToPage("./Login");
+            }
             await signInManager.SignOutAsync();
             return RedirectToPage("../Index");
         }
