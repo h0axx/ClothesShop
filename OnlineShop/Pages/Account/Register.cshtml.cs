@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.Core;
 using OnlineShop.Data;
+using OnlineShop.Service;
 
 namespace OnlineShop.Pages.Account
 {
@@ -18,6 +19,7 @@ namespace OnlineShop.Pages.Account
         private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IEmailSender emailSender;
         private readonly IMemberData memberData;
 
         [BindProperty]
@@ -26,11 +28,13 @@ namespace OnlineShop.Pages.Account
         public RegisterModel(UserManager<IdentityUser> userManager,
                              RoleManager<IdentityRole> roleManager,
                             SignInManager<IdentityUser> signInManager,
+                            IEmailSender emailSender,
                             IMemberData memberData)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.signInManager = signInManager;
+            this.emailSender = emailSender;
             this.memberData = memberData;
             userInput = new RegisterInput();
         }
@@ -56,6 +60,15 @@ namespace OnlineShop.Pages.Account
 
             if (result.Succeeded)
             {
+                //Token generation for email confirmation
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                //URL generating
+                var confirmationLink = Url.Page("/Account/ConfirmEmail", null, new { userId = user.Id, token = token}, Request.Scheme);
+                //Generating mail data
+                var message = new Message(new string[] { user.Email }, "Confirm your email address.", confirmationLink);
+                //Send email
+                emailSender.SendEmail(message);
+
                 //New member creation <- for user personal details
                 var member = new Member()
                 {
