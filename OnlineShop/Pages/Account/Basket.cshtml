@@ -3,52 +3,63 @@
 @{
     ViewData["Title"] = "Basket";
 }
-
-<h1>Basket</h1>
 @if (Model.Message != null)
 {
-<div class="alert alert-info">@Model.Message</div>
+    <div class="alert alert-info">@Model.Message</div>
 }
-@if (Model.BasketItems != null)
+
+@if (Model.BasketItems.Count() != 0)
 {
+    <div class="row">
+        <h1>Your basket</h1>
+    </div>
+    <div class="row">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th class="text-center" scope="col">Name</th>
+                    <th class="text-center" scope="col">Size</th>
+                    <th class="text-center" scope="col">Price</th>
+                    <th class="text-center" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
 
-    for (int i = 0; i < Model.BasketItems.Count(); i++)
-    {
-        var item = Model.BasketItems[i];
-
-        <div style="clear:both">
-            <div class="float-left">
-                <h3>@item.Name</h3>
-            </div>
-            <div class="float-left" style="width:10%">
-                @if (item.Photos.Count() > 0)
+                @for (int i = 0; i < Model.BasketItems.Count(); i++)
                 {
-                    <a asp-page="./Detail" asp-route-productId="@item.Id">
-                        <img src="~/images/@item.Id/@item.Photos[0].Path" width="100%" />
-                    </a>
-                }
-            </div>
-            <div class="float-left">
-                <span>@item.Price $</span>
-            </div>
-            <div class="float-left">
-                <span>@item.Size</span>
-            </div>
-            <div class="float-left">
-                <a class="btn btn-lg"
-                   asp-page="../Collection/Detail"
-                   asp-route-productId="@item.Id">
-                    <i class="glyphicon glyphicon-zoom-in"></i>
-                </a>
-            </div>
-            <form method="post">
-                <div class="form-group">
-                    <input type="submit" class="btn btn-danger" value="Delete"
-                           asp-page-handler="Delete"
-                           asp-route-itemId=@Model.ItemsId[i] />
-                </div>
-            </form>
-        </div>
+                    var item = Model.BasketItems[i];
 
-    }
+                    <tr>
+
+                        @if (item.Photos.Count() > 0)
+                        {
+                            <th scope="row" width="15%">
+                                <a asp-page="../Collection/Detail" asp-route-productId="@item.Id">
+                                    <img class="img-thumbnail" src="~/images/@item.Id/@item.Photos[0].Path" width="100%" />
+                                </a>
+                            </th>
+                        }
+                        <td class="text-center">@item.Name</td>
+                        <td class="text-center">@item.Size</td>
+                        <td class="text-center">@item.Price</td>
+                        <td class="text-center">
+                            <form method="post">
+                                <input type="submit" class="btn btn-danger" value="Delete"
+                                       asp-page-handler="Delete"
+                                       asp-route-itemId=@Model.ItemsId[i] />
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+<div class="row">
+    <h1>Your basket is empty</h1>
+</div>
 }
