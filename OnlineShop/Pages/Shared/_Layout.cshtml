@@ -51,7 +51,7 @@
                     <ul class="navbar-nav ml-auto">
                         @if (signInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item dropdown m-auto">
+                            <li class="nav-item dropdown m-auto px-3">
                                 <a class="glyphicon glyphicon-shopping-cart" asp-page="/Account/Basket"></a>
                             </li>
                             <li class="nav-item dropdown m-auto">
@@ -94,7 +94,6 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
