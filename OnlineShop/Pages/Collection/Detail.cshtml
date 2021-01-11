@@ -8,34 +8,56 @@
 <h1>@Model.Product.Name</h1>
 
 
-    @if (Model.Message != null)
-    {
-        <div class="alert alert-info">@Model.Message</div>
-    }
-    @if (Model.Photos.Count() > 0)
-    {
-        <div class="row">
-            @foreach (var photo in Model.Photos)
-            {
-                <div style="float:left; width:400px;">
-                    <img src="~/images/@Model.Product.Id/@photo.Path" width="100%" />
-                </div>
-            }
-        </div>
-    }
-    <div>
-        <div style="float:left; width:400px; height:100px">
-            Price: @Model.Product.Price
-        </div>
-        <div style="float:left; width:400px; height:100px">
-            Size: @Model.Product.Size
-        </div>
-        <div style="float:left; ">
-            <span style="white-space: pre-wrap">@Model.Product.Description</span>
-        </div>
-        <div style="clear:both"></div>
-    </div>
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+@if (Model.Photos.Count() > 0)
+{
+    <div class="row">
+   
 
-    <form method="post" enctype="multipart/form-data">
-        <button class="btn btn-primary" type="submit">Add to basket</button>
-    </form>
+            <div class="slider-outer">
+
+                <img src="~/images/arrow-left.png" class="prev" alt="Prev" />
+
+                <div class="slider-inner">
+
+                    @for (int i = 0; i < Model.Photos.Count(); i++)
+                    {
+                        @if (i == 0)
+                        {
+                            <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" class="active" width="100%" />
+                        }
+                        else
+                        {
+                            <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" width="100%" />
+                        }
+                    }
+
+                </div>
+
+                <img src="~/images/arrow-right.png" class="next" alt="Next" />
+            </div>
+        </div>
+
+}
+<div>
+    <div style="float:left; width:400px; height:100px">
+        Price: @Model.Product.Price
+    </div>
+    <div style="float:left; width:400px; height:100px">
+        Size: @Model.Product.Size
+    </div>
+    <div style="float:left; ">
+        <span style="white-space: pre-wrap">@Model.Product.Description</span>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <button class="btn btn-primary" type="submit">Add to basket</button>
+</form>
+
+<link rel="stylesheet" href="~/css/detail.css" />
+<script type="text/javascript" src="~/js/detail.js"></script>
