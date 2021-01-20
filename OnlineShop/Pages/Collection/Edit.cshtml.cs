@@ -30,7 +30,7 @@ namespace OnlineShop.Pages.Collection
         }
         public IActionResult OnGet(int? productId)
         {
-            Product = productService.OnGetEditPage(productId);
+            Product = productService.GetProduct(productId);
 
             Sizes = productService.Sizes;
             Types = productService.Types;
@@ -50,13 +50,9 @@ namespace OnlineShop.Pages.Collection
         {
             if (!ModelState.IsValid)
             {
-                Sizes = productService.Sizes;
-                Types = productService.Types;
-                Fabrics = productService.Fabrics;
-                Genders = productService.Genders;
-                return Page();
+                return RedirectToPage("./Edit", new { productId = Product.Id });
             }
-            Product = productService.OnPostEditPage(Product, Photos);
+            Product = productService.UpdateProduct(Product, Photos);
             TempData["Message"] = "Product saved!";
             return RedirectToPage("./Detail", new { productId = Product.Id });
         }

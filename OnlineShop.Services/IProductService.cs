@@ -11,7 +11,7 @@ namespace OnlineShop.Service
         IEnumerable<SelectListItem> Types { get; }
         IEnumerable<SelectListItem> Fabrics { get; }
         IEnumerable<SelectListItem> Genders { get; }
-        Product OnPostEditPage(Product product, List<IFormFile> photos);
-        Product OnGetEditPage(int? productId);
+        Product UpdateProduct(Product product, List<IFormFile> photos);
+        Product GetProduct(int? productId);
     }
 }

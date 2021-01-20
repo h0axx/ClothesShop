@@ -36,7 +36,7 @@ namespace OnlineShop.Service
         [BindProperty]
         public List<IFormFile> Photos { get; set; }
 
-        public Product OnGetEditPage(int? productId)
+        public Product GetProduct(int? productId)
         {
             Sizes = htmlHelper.GetEnumSelectList<ClothingSize>();
             Types = htmlHelper.GetEnumSelectList<ClothingType>();
@@ -48,7 +48,7 @@ namespace OnlineShop.Service
             return Product;
         }
 
-        public Product OnPostEditPage(Product product, List<IFormFile> photos)
+        public Product UpdateProduct(Product product, List<IFormFile> photos)
         {
             Product = product;
             Photos = photos;
