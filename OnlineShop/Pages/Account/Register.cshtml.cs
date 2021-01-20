@@ -68,8 +68,8 @@ namespace OnlineShop.Pages.Account
                 var confirmationLink = Url.Page("/Account/ConfirmEmail", null, new { userId = user.Id, token = token}, Request.Scheme);
                 //Generating mail data
                 var message = new Message(new string[] { user.Email }, "Confirm your email address.", confirmationLink);
-                //Send email
-                emailSender.SendEmail(message);
+                //Send autorization link
+                emailSender.SendAutorizationEmail(message);
 
                 //New member creation <- for user personal details
                 var member = new Member()

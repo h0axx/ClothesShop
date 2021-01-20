@@ -20,6 +20,13 @@ namespace OnlineShop.Service
             Send(emailMessage);
         }
 
+        public void SendAutorizationEmail(Message message)
+        {
+            var authorizationMessage = CreateAuthorizationMessage(message);
+
+            Send(authorizationMessage);
+        }
+
         private void Send(MimeMessage emailMessage)
         {
             using (var client = new SmtpClient())
@@ -51,8 +58,19 @@ namespace OnlineShop.Service
             emailMessage.From.Add(new MailboxAddress(_emailConifg.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) 
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+
+            return emailMessage;
+        }
+
+        private MimeMessage CreateAuthorizationMessage(Message message)
+        {
+            var emailMessage = new MimeMessage();
+
+            emailMessage.From.Add(new MailboxAddress(_emailConifg.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             { Text = string.Format("<a href={0}>Activate account</a>", message.Content) };
 
             return emailMessage;
