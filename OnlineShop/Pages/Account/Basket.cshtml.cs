@@ -19,6 +19,8 @@ namespace OnlineShop.Pages.Account
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IMemberData memberData;
         private readonly IProductData productData;
+        private readonly IOrderData orderData;
+        private readonly IProductService productService;
 
         public IdentityUser LoggedUser { get; set; }
         public Member UserData { get; set; }
@@ -30,12 +32,14 @@ namespace OnlineShop.Pages.Account
         public string Message { get; set; }
 
         public BasketModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager
-                        , IMemberData memberData, IProductData productData)
+                        , IMemberData memberData, IProductData productData, IOrderData orderData, IProductService productService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.memberData = memberData;
             this.productData = productData;
+            this.orderData = orderData;
+            this.productService = productService;
         }
         public async Task<IActionResult> OnGet()
         {
@@ -76,7 +80,41 @@ namespace OnlineShop.Pages.Account
             }
         }
 
-        //public async Task<IActionResult> OnPostRelizeOrder()
+        public async Task<IActionResult> OnPostRelizeOrder()
+        {
+            LoggedUser = await userManager.GetUserAsync(User);
+            UserData = memberData.GetMemberById(LoggedUser.Id);
+            UserData.Basket = memberData.GetAllBasketItems(UserData.Id).ToList();
+
+            SetListsBasedOnBasket(UserData.Basket);
+
+            if (BasketItems.Count > 0)
+            {
+                //Creation of new order
+                var order = new Order();
+                //Timestamp
+                order.Time = DateTime.Now;
+                //Setting a member id of whom the order belong to
+                order.MemberId = UserData.Id;
+                //Setting order.Products to products that are in basket list.
+                order.Products = OrderedProducts(BasketItems);
+                //Setting products from user basket to unavailable to make them impossible to buy twice or add to another basket
+                productService.SetProductsUnavailable(BasketItems);
+
+                //Adding data into DB  
+                orderData.Add(order);
+                orderData.Commit();
+
+                TempData["Message"] = "Order placed";
+            }
+            else
+            {
+                TempData["Message"] = "Order cannot be placed";
+            }
+
+            return RedirectToPage("./Basket");
+        }
+
         private void SetListsBasedOnBasket(IEnumerable<BasketItem> basketItems)
         {
             BasketItems = new List<Product>();
@@ -98,6 +136,19 @@ namespace OnlineShop.Pages.Account
                     UnavilableItems.Add(product);
                 }
             }
+        }
+
+        private List<OrderedProduct> OrderedProducts(IEnumerable<Product> products)
+        {
+            var orderedProducts = new List<OrderedProduct>();
+
+            foreach(var product in products)
+            {
+                var orderedProduct = new OrderedProduct(product.Id);
+                orderedProducts.Add(orderedProduct);
+            }
+
+            return orderedProducts;
         }
     }
 }
