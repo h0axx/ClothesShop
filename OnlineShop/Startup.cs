@@ -30,6 +30,7 @@ namespace OnlineShop
             services.AddTransient<IProductData, SqlProductData>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IMemberData, MemberData>();
+            services.AddTransient<IOrderData, OrderData>();
 
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
