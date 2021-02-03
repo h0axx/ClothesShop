@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.Core;
 using OnlineShop.Data;
+using OnlineShop.Service;
 
 namespace OnlineShop.Pages.Account
 {
@@ -22,6 +23,7 @@ namespace OnlineShop.Pages.Account
         public IdentityUser LoggedUser { get; set; }
         public Member UserData { get; set; }
         public List<Product> BasketItems { get; set; }
+        public List<Product> UnavilableItems { get; set; }
         public List<int> ItemsId { get; set; }
         public int ItemIdToDelete { get; set; }
         [TempData]
@@ -34,8 +36,6 @@ namespace OnlineShop.Pages.Account
             this.signInManager = signInManager;
             this.memberData = memberData;
             this.productData = productData;
-            BasketItems = new List<Product>();
-            ItemsId = new List<int>();
         }
         public async Task<IActionResult> OnGet()
         {
@@ -43,12 +43,8 @@ namespace OnlineShop.Pages.Account
             UserData = memberData.GetMemberById(LoggedUser.Id);
             UserData.Basket = memberData.GetAllBasketItems(UserData.Id).ToList();
 
-
-            foreach(var item in UserData.Basket)
-            {
-                BasketItems.Add(productData.GetById(item.ProductId));
-                ItemsId.Add(item.Id);
-            }
+            //BasketItems - list with products, ItemIds - list with id's of basket items, UnavailableItems - list with unavailable products in basket
+            SetListsBasedOnBasket(UserData.Basket);
 
             return Page();
         }
@@ -78,8 +74,30 @@ namespace OnlineShop.Pages.Account
                 TempData["Message"] = "Item is not existing";
                 return RedirectToPage("./Basket");
             }
+        }
 
+        //public async Task<IActionResult> OnPostRelizeOrder()
+        private void SetListsBasedOnBasket(IEnumerable<BasketItem> basketItems)
+        {
+            BasketItems = new List<Product>();
+            ItemsId = new List<int>();
+            UnavilableItems = new List<Product>();
+            Product product;
 
+            foreach (var item in basketItems)
+            {
+                product = productData.GetById(item.ProductId);
+
+                if (product.Available)
+                {
+                    BasketItems.Add(product);
+                    ItemsId.Add(item.Id);
+                }
+                else
+                {
+                    UnavilableItems.Add(product);
+                }
+            }
         }
     }
 }
