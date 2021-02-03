@@ -55,6 +55,11 @@ namespace OnlineShop.Pages.Collection
             {
                 return RedirectToPage("../Account/Login");
             }
+            else if (!Product.Available)
+            {
+                TempData["Message"] = "Product unavailable!";
+                return RedirectToPage("./Detail");
+            }
             else
             {
                 var memberId = memberData.GetMemberById(loggedUser.Id).Id;
