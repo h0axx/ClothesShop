@@ -88,14 +88,8 @@ namespace OnlineShop.Service
             }
             else
             {
-                Product = productData.Add(Product);
-                productData.Commit();
-                Product.Id = productData.GetNewId() - 1;
                 Product.Photos = ProcessUploadedFile();
-                if (Product.Photos != null)
-                {
-                    Product = productData.Update(Product);
-                }
+                Product = productData.Add(Product);
             }
             productData.Commit();
         }
@@ -159,6 +153,16 @@ namespace OnlineShop.Service
                 }
             }
             return uniqueFilesNames;
+        }
+
+        public void SetProductsUnavailable(IEnumerable<Product> products)
+        {
+            foreach(var product in products)
+            {
+                product.Available = false;
+                productData.Update(product);
+            }
+            productData.Commit();
         }
     }
 }

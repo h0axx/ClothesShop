@@ -13,5 +13,6 @@ namespace OnlineShop.Service
         IEnumerable<SelectListItem> Genders { get; }
         Product UpdateProduct(Product product, List<IFormFile> photos);
         Product GetProduct(int? productId);
+        void SetProductsUnavailable(IEnumerable<Product> products);
     }
 }
