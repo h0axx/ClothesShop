@@ -16,5 +16,7 @@ namespace OnlineShop.Data
         public DbSet<IdentityUser> IdentityUsers { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderedProduct> OrderedProducts { get; set; }
     }
 }
