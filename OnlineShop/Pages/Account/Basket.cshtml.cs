@@ -98,6 +98,12 @@ namespace OnlineShop.Pages.Account
                 order.MemberId = UserData.Id;
                 //Setting order.Products to products that are in basket list.
                 order.Products = OrderedProducts(BasketItems);
+
+                foreach(var orderedProduct in order.Products)
+                {
+                    order.Cost += productData.GetById(orderedProduct.ProductId).Price;
+                }
+
                 //Setting products from user basket to unavailable to make them impossible to buy twice or add to another basket
                 productService.SetProductsUnavailable(BasketItems);
 

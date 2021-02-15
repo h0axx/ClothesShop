@@ -10,6 +10,7 @@ namespace OnlineShop.Core
         public Order()
         {
             Products = new List<OrderedProduct>();
+            Cost = 0;
         }
         [Required]
         public int Id { get; set; }
@@ -18,7 +19,10 @@ namespace OnlineShop.Core
         [Required]
         public int MemberId { get; set; }
         [Required]
+        public double Cost { get; set; }
+        [Required]
         public List<OrderedProduct> Products { get; set; }
+        
     }
 }
 

@@ -33,6 +33,11 @@ namespace OnlineShop.Data
             return order;
         }
 
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return db.Orders;
+        }
+
         public int GetNewId()
         {
             return (db.Orders.OrderByDescending(p => p.Id).FirstOrDefault()?.Id ?? 0) + 1;

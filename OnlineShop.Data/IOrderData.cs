@@ -14,5 +14,6 @@ namespace OnlineShop.Data
         Order Add(Order order);
         Order Update(Order updatedOrder);
         Order Delete(Order order);
+        IEnumerable<Order> GetAllOrders();
     }
 }

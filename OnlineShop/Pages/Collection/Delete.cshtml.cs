@@ -12,13 +12,15 @@ namespace OnlineShop.Pages.Collection
     public class DeleteModel : PageModel
     {
         private IProductData productData;
+        private readonly IOrderData orderData;
         private IWebHostEnvironment webHostEnvironment;
 
         public Product Product { get; set; }
 
-        public DeleteModel(IProductData productData, IWebHostEnvironment webHostEnvironment)
+        public DeleteModel(IProductData productData, IOrderData orderData, IWebHostEnvironment webHostEnvironment)
         {
             this.productData = productData;
+            this.orderData = orderData;
             this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult OnGet(int productId)
