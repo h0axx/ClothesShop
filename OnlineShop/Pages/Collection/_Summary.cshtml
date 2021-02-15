@@ -9,14 +9,17 @@
                 <img class="card-img-top" src="~/images/@Model.Id/@Model.Photos[0].Path" width="100%" />
             </a>
         }
-            <div class="card-body">
-                <h5 class="card-title text-center">@Model.Name</h5>
-            </div>
-            <div class="card-body d-flex justify-content-center m-auto">
-                <ul class="list-group list-group-horizontal ">
-                    <li class="list-group-item">@Model.Price $</li>
-                    <li class="list-group-item">@Model.Size</li>
-                    <li class="list-group-item">@Model.Fabric</li>
-                </ul>
-            </div>
+        <div class="card-body">
+            <h5 class="card-title text-center">@Model.Name</h5>
         </div>
+
+        <div class="card-body d-flex justify-content-center m-auto">
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item">@Model.Price $</li>
+                <li class="list-group-item">@Model.Size</li>
+                <li class="list-group-item">@Model.Fabric</li>
+                @* Empty li, otherwise the last item is 1px smaller than the rest *@
+                <li></li>
+            </ul>
+        </div>
+    </div>
