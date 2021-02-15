@@ -18,6 +18,11 @@ namespace OnlineShop.Core
         public string Address { get; set; }
         [Display(Name = "Post Code")]
         public string PostCode { get; set; }
+        [Display(Name = "Phone number")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
+                   ErrorMessage = "Entered phone format is not valid.")]
+        public string PhoneNumber { get; set; }
         public string IdentityId { get; set; }      
         public List<BasketItem> Basket { get; set; }
 
