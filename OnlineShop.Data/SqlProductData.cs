@@ -68,6 +68,11 @@ namespace OnlineShop.Data
             return photos;
         }
 
+        public IEnumerable<Product> GetAvilableProductsBy(string name, ClothingSize? size, GenderType? gender, FabricType? fabric, ClothingType? type)
+        {
+            return GetProductsBy(name, size, gender, fabric, type).Where(x => x.Available == true);
+        }
+
         public Product GetById(int id)
         {
             var query = db.Products.Include("Photos").Where(z => z.Id == id).FirstOrDefault();
