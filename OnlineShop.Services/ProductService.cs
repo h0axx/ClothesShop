@@ -77,7 +77,7 @@ namespace OnlineShop.Service
             {
                 if (Photos.Count > 0)
                 {
-                    Product.Photos = ProcessUploadedFile();
+                    Product.Photos = ProcessUploadedFile(Product.Id);
                     productData.DeletePhotos(Product.Id);
                     Product = productData.Update(Product);
                 }
@@ -88,8 +88,9 @@ namespace OnlineShop.Service
             }
             else
             {
-                Product.Photos = ProcessUploadedFile();
                 Product = productData.Add(Product);
+                productData.Commit();
+                Product.Photos = ProcessUploadedFile(Product.Id);
             }
             productData.Commit();
         }
@@ -122,22 +123,13 @@ namespace OnlineShop.Service
                 }
             }
         }
-        private List<Photo> ProcessUploadedFile()
+        private List<Photo> ProcessUploadedFile(int productId)
         {
             List<Photo> uniqueFilesNames = new List<Photo>();
 
             if (Photos != null)
             {
-                int id;
-                if (Product.Id == 0)
-                {
-                    id = productData.GetNewId();
-                }
-                else
-                {
-                    id = Product.Id;
-                }
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", $"{id}");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", $"{productId}");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
