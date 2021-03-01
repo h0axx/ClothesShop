@@ -1,0 +1,47 @@
+﻿@page
+@model OnlineShop.Pages.Account.Admin.OrdersModel
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="row">
+    <h1 class="display-4">Orders</h1>
+</div>
+<div class="row">
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">Order Id</th>
+                <th class="text-center" scope="col">Time of placing the order</th>
+                <th class="text-center" scope="col">Cost</th>
+                <th class="text-center" scope="col">Delivery</th>
+                <th class="text-center" scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var order in Model.Orders)
+            {
+            <tr>
+                <td class="text-center">
+                    @order.Id
+                </td>
+                <td class="text-center">
+                    @order.Time
+                </td>
+                <td class="text-center">
+                    @order.Cost
+                </td>
+                <td class="text-center">
+                    Inpost - hardcoded
+                </td>
+                <td class="text-center">
+                    @order.Status
+                </td>
+            </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
