@@ -56,15 +56,15 @@ namespace OnlineShop.Pages.Collection
             Fabrics = htmlHelper.GetEnumSelectList<FabricType>();
             Genders = htmlHelper.GetEnumSelectList<GenderType>();
 
-            Products = productData.GetProductsBy(SearchTerm, Size, Gender, Fabric, Type);
-
             if (IsUserAdmin())
             {
                 Admin = true;
+                Products = productData.GetProductsBy(SearchTerm, Size, Gender, Fabric, Type);
             }
             else
             {
                 Admin = false;
+                Products = productData.GetAvilableProductsBy(SearchTerm, Size, Gender, Fabric, Type);
             }
         }
 
