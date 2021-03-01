@@ -4,7 +4,7 @@
     ViewData["Title"] = "User";
 }
 
-<h1>@Model.UserData.FullName</h1>
+<h1 class="display-4">@Model.UserData.FullName</h1>
 
 
 
@@ -15,32 +15,32 @@
             <input type="hidden" asp-for="UserData.Id" />
             <input type="hidden" asp-for="UserData.IdentityId" />
             <div class="form-group">
-                <label asp-for="UserData.FirstName"></label>
+                <label class="font-weight-light"  asp-for="UserData.FirstName"></label>
                 <input asp-for="UserData.FirstName" class="form-control" />
                 <span asp-validation-for="UserData.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserData.LastName"></label>
+                <label class="font-weight-light" asp-for="UserData.LastName"></label>
                 <input asp-for="UserData.LastName" class="form-control" />
                 <span asp-validation-for="UserData.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserData.City"></label>
+                <label class="font-weight-light" asp-for="UserData.City"></label>
                 <input asp-for="UserData.City" class="form-control" />
                 <span asp-validation-for="UserData.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserData.Address"></label>
+                <label class="font-weight-light" asp-for="UserData.Address"></label>
                 <input asp-for="UserData.Address" class="form-control" />
                 <span asp-validation-for="UserData.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserData.PostCode"></label>
+                <label class="font-weight-light" asp-for="UserData.PostCode"></label>
                 <input asp-for="UserData.PostCode" class="form-control" />
                 <span asp-validation-for="UserData.PostCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserData.PhoneNumber"></label>
+                <label class="font-weight-light" asp-for="UserData.PhoneNumber"></label>
                 <input asp-for="UserData.PhoneNumber" class="form-control" />
                 <span asp-validation-for="UserData.PhoneNumber" class="text-danger"></span>
             </div>
