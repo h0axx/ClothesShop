@@ -18,5 +18,6 @@ namespace OnlineShop.Data
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderedProduct> OrderedProducts { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
     }
 }
