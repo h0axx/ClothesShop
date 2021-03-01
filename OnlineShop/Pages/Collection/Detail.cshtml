@@ -5,8 +5,25 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>@Model.Product.Name</h1>
+<div class="row">
+    <div class="d-flex m-2">
+        <h1 class="display-4">@Model.Product.Name</h1>
+    </div>
 
+@if (Model.Admin == true)
+{
+
+
+    <div class="d-flex align-items-center m-2">
+        <a class="btn btn-primary" href="../Edit/@Model.Product.Id">Edit</a>
+    </div>
+    <div class="d-flex align-items-center m-2">
+        <a class="btn btn-danger" href="../Delete/@Model.Product.Id">Delete</a>
+    </div>
+
+
+}
+</div>
 
 @if (Model.Message != null)
 {
@@ -15,31 +32,31 @@
 @if (Model.Photos.Count() > 0)
 {
     <div class="row">
-   
 
-            <div class="slider-outer">
 
-                <img src="~/images/arrow-left.png" class="prev" alt="Prev" />
+        <div class="slider-outer">
 
-                <div class="slider-inner">
+            <img src="~/images/arrow-left.png" class="prev" alt="Prev" />
 
-                    @for (int i = 0; i < Model.Photos.Count(); i++)
+            <div class="slider-inner">
+
+                @for (int i = 0; i < Model.Photos.Count(); i++)
+                {
+                    @if (i == 0)
                     {
-                        @if (i == 0)
-                        {
-                            <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" class="active" width="100%" />
-                        }
-                        else
-                        {
-                            <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" width="100%" />
-                        }
+                        <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" class="active" width="100%" />
                     }
+                    else
+                    {
+                        <img src="~/images/@Model.Product.Id/@Model.Photos.ToList()[i].Path" width="100%" />
+                    }
+                }
 
-                </div>
-
-                <img src="~/images/arrow-right.png" class="next" alt="Next" />
             </div>
+
+            <img src="~/images/arrow-right.png" class="next" alt="Next" />
         </div>
+    </div>
 
 }
 <div>
@@ -55,9 +72,14 @@
     <div style="clear:both"></div>
 </div>
 
-<form method="post" enctype="multipart/form-data">
-    <button class="btn btn-primary" type="submit">Add to basket</button>
-</form>
+<div class="row">
+    <div class="d-flex m-1">
+        <form method="post" enctype="multipart/form-data">
+            <button class="btn btn-primary" type="submit">Add to basket</button>
+        </form>
+    </div>
+</div>
+
 
 <link rel="stylesheet" href="~/css/detail.css" />
 <script type="text/javascript" src="~/js/detail.js"></script>
