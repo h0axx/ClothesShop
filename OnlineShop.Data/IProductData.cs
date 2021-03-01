@@ -7,6 +7,7 @@ namespace OnlineShop.Data
     {
         IEnumerable<Product> GetProductsByName(string name);
         IEnumerable<Product> GetProductsBy(string name, ClothingSize? size, GenderType? gender, FabricType? fabric, ClothingType? type);
+        IEnumerable<Product> GetAvilableProductsBy(string name, ClothingSize? size, GenderType? gender, FabricType? fabric, ClothingType? type);
         IEnumerable<Photo> GetPhotosById(int id);
         Product GetById(int id);
         int GetNewId();
