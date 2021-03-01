@@ -33,6 +33,7 @@ namespace OnlineShop.Data
             if (product != null)
             {
                 db.Products.Remove(product);
+                //THAT SHOULD NOT BE HERE - Single Responsibility Principle
                 DeleteBasketItems(id);
             }
             return product;
