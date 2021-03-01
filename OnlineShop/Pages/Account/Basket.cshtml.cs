@@ -28,6 +28,15 @@ namespace OnlineShop.Pages.Account
         public List<Product> UnavilableItems { get; set; }
         public List<int> ItemsId { get; set; }
         public int ItemIdToDelete { get; set; }
+        public double TotalCost { get
+            {
+                double temp = 0;
+                foreach(var item in BasketItems)
+                {
+                    temp += item.Price;
+                }
+                return temp;
+            } }
         [TempData]
         public string Message { get; set; }
 

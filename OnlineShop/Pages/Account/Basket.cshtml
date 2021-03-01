@@ -11,7 +11,7 @@
 @if (Model.BasketItems.Count() != 0)
 {
     <div class="row">
-        <h1>Your basket</h1>
+        <h1 class="display-4">Your basket</h1>
     </div>
     <div class="row">
         <table class="table table-borderless">
@@ -55,9 +55,14 @@
 
             </tbody>
         </table>
+        </div>
+    <div class="row">
+        Total cost: @Model.TotalCost
+    </div>
+    <div class="row">
         <form method="post">
             <input type="submit" class="btn btn-primary" value="Relize order"
-                   asp-page-handler="RelizeOrder"/>
+                    asp-page-handler="RelizeOrder"/>
         </form>
     </div>
 }
