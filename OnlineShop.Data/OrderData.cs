@@ -45,7 +45,7 @@ namespace OnlineShop.Data
 
         public Order GetOrderById(int orderId)
         {
-            var query = db.Orders.Include("OrderedProduct").Where(z => z.Id == orderId).FirstOrDefault();
+            var query = db.Orders.Where(z => z.Id == orderId).FirstOrDefault();
 
             return query;
         }
