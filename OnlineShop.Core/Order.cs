@@ -20,6 +20,8 @@ namespace OnlineShop.Core
         public int MemberId { get; set; }
         [Required]
         public double Cost { get; set; }
+        public OrderStatus Status { get; set; }
+        public Delivery Delivery { get; set; }
         [Required]
         public List<OrderedProduct> Products { get; set; }
         
