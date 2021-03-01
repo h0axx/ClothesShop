@@ -19,6 +19,7 @@ namespace OnlineShop.Pages.Collection
 
         public Product Product { get; set; }
         public IEnumerable<Photo> Photos { get; set; }
+        public bool Admin { get; set; }
         [TempData]
         public string Message { get; set; }
         
@@ -34,6 +35,15 @@ namespace OnlineShop.Pages.Collection
         {
             Product = productData.GetById(productId);
             Photos = productData.GetPhotosById(productId);
+
+            if (User.IsInRole("Admin"))
+            {
+                Admin = true;
+            }
+            else
+            {
+                Admin = false;
+            }
 
             if (Product == null)
             {
