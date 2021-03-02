@@ -16,6 +16,7 @@ namespace OnlineShop.Core
         public string Name { get; set; }
         [Required]
         [Range(0, 9999999.99)]
+        [RegularExpression(@"^\d+.\d{0,2}$", ErrorMessage = "Price can't have more than 2 decimal places")]
         public double Price { get; set; }
         [Required]
         public bool Available { get; set; }
