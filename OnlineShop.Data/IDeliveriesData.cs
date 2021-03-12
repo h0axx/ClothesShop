@@ -11,5 +11,6 @@ namespace OnlineShop.Data
         Delivery Delete(int id);
         IEnumerable<Delivery> GetDeliveries();
         Delivery GetDeliveryById(int id);
+        int Commit();
     }
 }

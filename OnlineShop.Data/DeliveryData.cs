@@ -20,6 +20,11 @@ namespace OnlineShop.Data
             return delivery;
         }
 
+        public int Commit()
+        {
+            return db.SaveChanges();
+        }
+
         public Delivery Delete(int id)
         {
             var delivery = GetDeliveryById(id);
