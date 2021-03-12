@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace OnlineShop.Pages.Account.Admin
+namespace OnlineShop.Pages.Account.Admin.Deliveries
 {
-    [Authorize(Roles = "Admin")]
-    public class DeliveriesModel : PageModel
+    public class DeleteModel : PageModel
     {
         public void OnGet()
         {
