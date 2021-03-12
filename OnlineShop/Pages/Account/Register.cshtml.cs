@@ -38,7 +38,6 @@ namespace OnlineShop.Pages.Account
             this.signInManager = signInManager;
             this.emailSender = emailSender;
             this.memberData = memberData;
-            userInput = new RegisterInput();
         }
 
         public IActionResult OnGet()
