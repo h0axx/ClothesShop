@@ -19,7 +19,6 @@ namespace OnlineShop.Pages.Account
         public LoginModel(SignInManager<IdentityUser> signInManager,
                                         UserManager<IdentityUser> userManager)
         {
-            userInput = new LoginInput();
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
